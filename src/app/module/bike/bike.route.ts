@@ -10,6 +10,14 @@ router.post(
   validateRequest(BikeValidations.createBikeValidationSchema),
   BikeController.createBike,
 );
-router.get("/bikes", BikeController.getAllBike)
+router.get("/bikes", BikeController.getAllBike);
+
+router.put(
+  "/bikes/:id",
+  validateRequest(BikeValidations.updateBikeValidationSchema),
+  BikeController.updateBike,
+);
+
+router.delete("/bikes/:id", BikeController.deleteBike)
 
 export const BikeRoutes = router;

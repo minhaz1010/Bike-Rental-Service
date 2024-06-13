@@ -13,6 +13,9 @@ const createBikeValidationSchema = z.object({
   }),
 });
 
+const updateBikeValidationSchema = createBikeValidationSchema.deepPartial();
+
 export const BikeValidations = {
   createBikeValidationSchema,
+  updateBikeValidationSchema,
 };

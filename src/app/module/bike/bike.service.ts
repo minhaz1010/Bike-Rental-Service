@@ -1,3 +1,4 @@
+import { log } from "console";
 import { IBike } from "./bike.interface";
 import { Bike } from "./bike.model";
 
@@ -12,10 +13,17 @@ const getAllBikesFromDatabase = async () => {
 };
 
 const updateBikeFromDatabase = async (id: string, payload: Partial<IBike>) => {
+  console.log({ payload })
+
+  const resulttt = await Bike.findByIdAndUpdate(id, payload, { new: true })
+
   const result = await Bike.findOneAndUpdate({ _id: id }, payload, {
     new: true,
+
   });
-  return result;
+
+  console.log({ resulttt }, { result })
+  return resulttt;
 };
 
 const deleteASingleBikeFromDatabase = async (id: string) => {

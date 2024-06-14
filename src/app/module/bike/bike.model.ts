@@ -38,22 +38,21 @@ const bikeSchema = new Schema<IBike>({
   },
 });
 
+bikeSchema.pre<Query<any, any>>(
+  /^findOneAnd(Update|Delete)$/,
+  async function(next) {
+    const query = this as Query<any, any>;
+    const _id = query.getQuery()._id;
 
-bikeSchema.pre<Query<any, any>>(/^findOneAnd(Update|Delete)$/, async function(next) {
-  const query = this as Query<any, any>;
-  const _id = query.getQuery()._id;
+    const bike = await Bike.findById(_id).session(null);
 
-  const bike = await Bike.findById(_id).session(null);
+    if (!bike) {
+      return next(new AppError(httpStatus.NOT_FOUND, "No data found"));
+    }
 
-
-  if (!bike) {
-    return next(new AppError(httpStatus.NOT_FOUND, "No data found"));
-  }
-
-  next();
-});
-
-
+    next();
+  },
+);
 
 // bikeSchema.pre<Query<any, any>>("findOneAndUpdate", async function(next) {
 //   const { _id } = this.getQuery();
@@ -78,9 +77,5 @@ bikeSchema.pre<Query<any, any>>(/^findOneAnd(Update|Delete)$/, async function(ne
 //   }
 //   next();
 // })
-
-
-
-
 
 export const Bike = model<IBike>("Bike", bikeSchema);

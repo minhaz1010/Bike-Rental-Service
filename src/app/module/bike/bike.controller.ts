@@ -39,19 +39,19 @@ const updateBike = catchAsyncErrors(async (req, res) => {
 });
 
 const deleteBike = catchAsyncErrors(async (req, res) => {
-  const result = await BikeServices.deleteASingleBikeFromDatabase(req.params.id);
+  const result = await BikeServices.deleteASingleBikeFromDatabase(
+    req.params.id,
+  );
   sendResponse(res, {
     statusCode: httpStatus.OK,
     message: "Bike deleted successfully",
     result,
   });
-
-
-})
+});
 
 export const BikeController = {
   createBike,
   getAllBike,
   updateBike,
-  deleteBike
+  deleteBike,
 };

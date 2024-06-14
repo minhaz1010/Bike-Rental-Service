@@ -1,6 +1,10 @@
 import { ErrorRequestHandler } from "express";
 import { TErrorMessages } from "../utils";
 import { ZodError } from "zod";
+import handleZodError from "./handleZodError";
+import handleDuplicateError from "./handleDuplicateError";
+import mongooseValiDationError from "./mongooseValidationError";
+import handleCastError from "./handleCastError";
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   let statusCode = 500;
@@ -16,30 +20,32 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
       message: "Something went wrong"
     }
   ]
-  const handleZodError = (err: ZodError) => {
-    const statusCode = 400;
-    const message = "Validation Error";
-    const errorMessages: TErrorMessages = err.issues.map((error) => {
-      return {
-        path: error.path[error.path.length - 1] as string,
-        message: error.message
-      }
-    })
+  // INFO: Duplicate error 
 
-    return {
-      statusCode,
-      message,
-      errorMessages
-    }
+  // HACK: 
 
 
-  }
 
   if (err instanceof ZodError) {
     const getTheErrorData = handleZodError(err)
     message = getTheErrorData.message;
     statusCode = getTheErrorData.statusCode;
     errorMessages = getTheErrorData.errorMessages
+  } else if (err?.errorResponse?.code === 11000) {
+    const getTheErrorData = handleDuplicateError(err);
+    message = getTheErrorData.message;
+    statusCode = getTheErrorData.statusCode;
+    errorMessages = getTheErrorData.errorMessages;
+  } else if (err?.name === "ValidationError") {
+    const getTheErrorData = mongooseValiDationError(err);
+    message = getTheErrorData.message;
+    statusCode = getTheErrorData.statusCode;
+    errorMessages = getTheErrorData.errorMessages;
+  } else if (err?.name === "CastError") {
+    const getTheErrorData = handleCastError(err);
+    message = getTheErrorData.message;
+    statusCode = getTheErrorData.statusCode;
+    errorMessages = getTheErrorData.errorMessages;
   }
 
 

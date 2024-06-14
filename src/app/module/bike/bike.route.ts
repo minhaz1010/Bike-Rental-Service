@@ -7,7 +7,7 @@ const router = e.Router();
 
 router.post(
   "/bikes",
-  // validateRequest(BikeValidations.createBikeValidationSchema),
+  validateRequest(BikeValidations.createBikeValidationSchema),
   BikeController.createBike,
 );
 router.get("/bikes", BikeController.getAllBike);

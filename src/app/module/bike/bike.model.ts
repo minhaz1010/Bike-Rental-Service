@@ -7,7 +7,6 @@ const bikeSchema = new Schema<IBike>({
   name: {
     type: String,
     required: [true, "Your name is required"],
-    unique: true
   },
   description: {
     type: String,

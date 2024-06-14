@@ -11,8 +11,8 @@ const moduleRouter = [
   },
   {
     path: "/",
-    route: UserRoutes
-  }
+    route: UserRoutes,
+  },
 ];
 
 moduleRouter.forEach((route) => {

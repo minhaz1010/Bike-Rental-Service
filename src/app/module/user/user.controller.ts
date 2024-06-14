@@ -8,10 +8,10 @@ const createUser = catchAsyncErrors(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     message: "User registered successfully",
-    result
-  })
-})
+    result,
+  });
+});
 
 export const UserControllers = {
-  createUser
-}
+  createUser,
+};

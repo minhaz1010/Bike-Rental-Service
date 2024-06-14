@@ -9,15 +9,15 @@ const handleDuplicateError = (err: any) => {
   const errorMessages: TErrorMessages = [
     {
       path: "",
-      message: `${extractedMessage} is already exist`
-    }
-  ]
+      message: `${extractedMessage} is already exist`,
+    },
+  ];
 
   return {
     message,
     statusCode,
-    errorMessages
-  }
-}
+    errorMessages,
+  };
+};
 
-export default handleDuplicateError
+export default handleDuplicateError;

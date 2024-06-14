@@ -7,18 +7,15 @@ const handleZodError = (err: ZodError) => {
   const errorMessages: TErrorMessages = err.issues.map((error) => {
     return {
       path: error.path[error.path.length - 1] as string,
-      message: error.message
-    }
-  })
+      message: error.message,
+    };
+  });
 
   return {
     statusCode,
     message,
-    errorMessages
-  }
+    errorMessages,
+  };
+};
 
-
-}
-
-
-export default handleZodError
+export default handleZodError;

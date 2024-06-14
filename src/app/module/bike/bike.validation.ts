@@ -13,7 +13,6 @@ const createBikeValidationSchema = z.object({
   }),
 });
 
-
 const updateBikeValidationSchema = z.object({
   body: z.object({
     name: z.string().optional(),
@@ -24,8 +23,8 @@ const updateBikeValidationSchema = z.object({
     year: z.number().optional(),
     model: z.string().optional(),
     brand: z.string().optional(),
-  })
-})
+  }),
+});
 export const BikeValidations = {
   createBikeValidationSchema,
   updateBikeValidationSchema,

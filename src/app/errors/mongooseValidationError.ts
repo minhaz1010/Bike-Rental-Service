@@ -9,17 +9,15 @@ const mongooseValiDationError = (err: mongoose.Error.ValidationError) => {
   const errorMessages: TErrorMessages = propertiesName.map((field) => {
     return {
       path: field,
-      message: `${field} is required`
-    }
-  })
+      message: `${field} is required`,
+    };
+  });
 
   return {
     statusCode,
     message,
-    errorMessages
-  }
-
-}
-
+    errorMessages,
+  };
+};
 
 export default mongooseValiDationError;

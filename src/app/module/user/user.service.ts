@@ -1,7 +1,6 @@
 import { IUser } from "./user.interface";
 import { User } from "./user.model";
 
-
 const createUserInDatabase = async (payload: IUser) => {
   const user = new User(payload);
   await user.save();
@@ -10,9 +9,8 @@ const createUserInDatabase = async (payload: IUser) => {
   delete userObj.password;
 
   return userObj;
-
-}
+};
 
 export const UserServices = {
-  createUserInDatabase
-}
+  createUserInDatabase,
+};

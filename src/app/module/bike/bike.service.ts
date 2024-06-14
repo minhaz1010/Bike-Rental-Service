@@ -13,16 +13,15 @@ const getAllBikesFromDatabase = async () => {
 };
 
 const updateBikeFromDatabase = async (id: string, payload: Partial<IBike>) => {
-  console.log({ payload })
+  console.log({ payload });
 
-  const resulttt = await Bike.findByIdAndUpdate(id, payload, { new: true })
+  const resulttt = await Bike.findByIdAndUpdate(id, payload, { new: true });
 
   const result = await Bike.findOneAndUpdate({ _id: id }, payload, {
     new: true,
-
   });
 
-  console.log({ resulttt }, { result })
+  console.log({ resulttt }, { result });
   return resulttt;
 };
 

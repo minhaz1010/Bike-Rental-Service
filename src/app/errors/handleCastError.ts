@@ -8,16 +8,15 @@ const handleCastError = (err: mongoose.Error.CastError) => {
   const errorMessages: TErrorMessages = [
     {
       path: err.path,
-      message: err.message
-    }
-  ]
+      message: err.message,
+    },
+  ];
 
   return {
     statusCode,
     message,
-    errorMessages
-  }
-}
-
+    errorMessages,
+  };
+};
 
 export default handleCastError;

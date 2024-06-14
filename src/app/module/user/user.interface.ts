@@ -1,4 +1,4 @@
-export type TUserRole = "user" | "admin"
+export type TUserRole = "user" | "admin";
 
 export interface IUser {
   name: string;
@@ -6,5 +6,5 @@ export interface IUser {
   password: string;
   phone: string;
   address: string;
-  role: TUserRole
+  role: TUserRole;
 }

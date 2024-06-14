@@ -5,6 +5,8 @@ import handleZodError from "./handleZodError";
 import handleDuplicateError from "./handleDuplicateError";
 import mongooseValiDationError from "./mongooseValidationError";
 import handleCastError from "./handleCastError";
+import AppError from "./appError";
+import config from "../config";
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   let statusCode = 500;
@@ -17,20 +19,18 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   let errorMessages: TErrorMessages = [
     {
       path: "",
-      message: "Something went wrong"
-    }
-  ]
-  // INFO: Duplicate error 
+      message: "Something went wrong",
+    },
+  ];
+  // INFO: Duplicate error
 
-  // HACK: 
-
-
+  // HACK:
 
   if (err instanceof ZodError) {
-    const getTheErrorData = handleZodError(err)
+    const getTheErrorData = handleZodError(err);
     message = getTheErrorData.message;
     statusCode = getTheErrorData.statusCode;
-    errorMessages = getTheErrorData.errorMessages
+    errorMessages = getTheErrorData.errorMessages;
   } else if (err?.errorResponse?.code === 11000) {
     const getTheErrorData = handleDuplicateError(err);
     message = getTheErrorData.message;
@@ -46,14 +46,31 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     message = getTheErrorData.message;
     statusCode = getTheErrorData.statusCode;
     errorMessages = getTheErrorData.errorMessages;
+  } else if (err instanceof AppError) {
+    statusCode = err.statusCode;
+    message = err.message;
+    errorMessages = [
+      {
+        path: "",
+        message: err?.message,
+      },
+    ];
+  } else if (err instanceof Error) {
+    message = err.message;
+    errorMessages = [
+      {
+        path: "",
+        message: err?.message,
+      },
+    ];
   }
-
 
   res.status(statusCode).json({
     success: false,
     message,
     errorMessages,
     err,
+    stack: config.NODE_ENV === "development" ? err?.stack : null,
   });
 };
 

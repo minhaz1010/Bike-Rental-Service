@@ -40,7 +40,7 @@ const bikeSchema = new Schema<IBike>({
 
 bikeSchema.pre<Query<any, any>>(
   /^findOneAnd(Update|Delete)$/,
-  async function(next) {
+  async function (next) {
     const query = this as Query<any, any>;
     const _id = query.getQuery()._id;
 

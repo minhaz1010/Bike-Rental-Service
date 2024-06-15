@@ -1,6 +1,8 @@
-import { Schema, model } from "mongoose";
+import { Schema, UpdateQuery, model } from "mongoose";
 import { IUser } from "./user.interface";
 import bcrypt from "bcrypt";
+import AppError from "../../errors/appError";
+import httpStatus from "http-status";
 
 const userSchema = new Schema<IUser>(
   {
@@ -42,8 +44,18 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-userSchema.post("save", function (doc, next) {
-  doc.password = "";
+userSchema.pre("findOneAndUpdate", async function (next) {
+  const value = this.getUpdate() as UpdateQuery<any>;
+
+  if (value) {
+    if (value.password) {
+      throw new AppError(
+        httpStatus.FORBIDDEN,
+        "You can not update the password",
+      );
+    }
+  }
+
   next();
 });
 

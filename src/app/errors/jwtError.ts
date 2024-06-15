@@ -1,7 +1,10 @@
 import httpStatus from "http-status";
-import { JsonWebTokenError, NotBeforeError, TokenExpiredError } from "jsonwebtoken";
+import {
+  JsonWebTokenError,
+  NotBeforeError,
+  TokenExpiredError,
+} from "jsonwebtoken";
 import { TErrorMessages } from "../utils";
-
 
 export const handleTokenExpiredError = (err: TokenExpiredError) => {
   const statusCode = httpStatus.FORBIDDEN;
@@ -9,32 +12,32 @@ export const handleTokenExpiredError = (err: TokenExpiredError) => {
   const errorMessages: TErrorMessages = [
     {
       path: "",
-      message: err.name
-    }
-  ]
+      message: err.name,
+    },
+  ];
   return {
     statusCode,
     message,
-    errorMessages
-  }
-}
+    errorMessages,
+  };
+};
 
 export const handleJsonWebTokenError = (err: JsonWebTokenError) => {
   const statusCode = httpStatus.FORBIDDEN;
-  const message = "Invalid token - the header or payload could not be parsed or jwt malformed";
+  const message =
+    "Invalid token - the header or payload could not be parsed or jwt malformed";
   const errorMessages: TErrorMessages = [
     {
       path: "",
-      message: err.name
-    }
-  ]
+      message: err.name,
+    },
+  ];
   return {
     statusCode,
     message,
-    errorMessages
-  }
-}
-
+    errorMessages,
+  };
+};
 
 export const notBeforeError = (err: NotBeforeError) => {
   const statusCode = httpStatus.FORBIDDEN;
@@ -42,13 +45,12 @@ export const notBeforeError = (err: NotBeforeError) => {
   const errorMessages: TErrorMessages = [
     {
       path: "",
-      message: err.name
-    }
-  ]
+      message: err.name,
+    },
+  ];
   return {
     statusCode,
     message,
-    errorMessages
-  }
-}
-
+    errorMessages,
+  };
+};

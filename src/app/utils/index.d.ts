@@ -4,3 +4,5 @@ export type TErrorMessage = {
 };
 
 export type TErrorMessages = TErrorMessage[];
+
+export type TUserRole = "admin" | "user";

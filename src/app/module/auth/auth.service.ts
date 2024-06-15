@@ -7,7 +7,6 @@ import config from "../../config";
 import { IUser } from "../user/user.interface";
 import checkPasswordIsCorrectOrNot from "../../utils/comparePassword";
 
-
 const loginService = async (payload: IAuth) => {
   const user = await User.findOne({ email: payload.email }).select("+password");
 
@@ -28,7 +27,6 @@ const loginService = async (payload: IAuth) => {
   };
   const userObj = user.toObject();
   delete userObj.password;
-
 
   const token = jwt.sign(jwtPayload, config.JWT_SECRET as string, {
     expiresIn: config.JWT_EXPIRES,

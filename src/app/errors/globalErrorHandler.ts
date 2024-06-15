@@ -7,8 +7,11 @@ import mongooseValiDationError from "./mongooseValidationError";
 import handleCastError from "./handleCastError";
 import AppError from "./appError";
 import config from "../config";
-import { handleJsonWebTokenError, handleTokenExpiredError, notBeforeError } from "./jwtError";
-
+import {
+  handleJsonWebTokenError,
+  handleTokenExpiredError,
+  notBeforeError,
+} from "./jwtError";
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   let statusCode = 500;
@@ -62,9 +65,8 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     const getTheErrorData = notBeforeError(err);
     statusCode = getTheErrorData.statusCode;
     message = getTheErrorData.message;
-    errorMessages = getTheErrorData.errorMessages
-  }
-  else if (err instanceof AppError) {
+    errorMessages = getTheErrorData.errorMessages;
+  } else if (err instanceof AppError) {
     statusCode = err.statusCode;
     message = err.message;
     errorMessages = [

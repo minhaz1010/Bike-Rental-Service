@@ -13,10 +13,10 @@ const seeUserProfile = catchAsyncErrors(async (req, res) => {
   }
   const authToken = headers.split("Bearer ")[1];
 
-  const verify = await jwt.verify(authToken, config.JWT_SECRET as string);
-  console.log({ verify })
-
-  const payload = await jwt.decode(authToken) as JwtPayload;
+  const payload = jwt.verify(
+    authToken,
+    config.JWT_SECRET as string,
+  ) as JwtPayload;
 
   if (!payload) {
     throw new AppError(httpStatus.FORBIDDEN, "Payload is corrupted");

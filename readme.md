@@ -2,6 +2,9 @@
 
 Welcome to the Bike Rental Service API. This backend service allows users to rent bikes, manage their profiles, and view available bikes. Admins can manage bike inventory and handle user rentals.
 
+## Live Link
+[Bike-Rental-Service](https://bike-rental-service-node.vercel.app/)
+
 ## ER-Diagram 
 ![ER-Diagram](./ER.png)
 

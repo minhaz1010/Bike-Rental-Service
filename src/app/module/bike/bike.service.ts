@@ -7,7 +7,7 @@ const createBikeInDatabase = async (payload: IBike) => {
 };
 
 const getAllBikesFromDatabase = async () => {
-  const result = await Bike.find();
+  const result = await Bike.find({isAvailable:true});
   return result;
 };
 

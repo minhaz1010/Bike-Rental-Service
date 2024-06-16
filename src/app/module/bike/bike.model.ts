@@ -39,6 +39,7 @@ const bikeSchema = new Schema<IBike>({
   },
 });
 
+
 bikeSchema.pre<Query<any, any>>(
   /^findOneAnd(Update|Delete)$/,
   async function(next) {

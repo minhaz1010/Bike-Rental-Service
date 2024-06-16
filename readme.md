@@ -14,12 +14,10 @@ Welcome to the Bike Rental Service API. This backend service allows users to ren
 ## Table of Contents
 
 - [Features](#features)
-- [Requirements](#requirements)
+- [Technology Stack](#stack)
 - [Installation](#installation)
-- [Usage](#usage)
 - [API Endpoints](#api-endpoints)
 - [Data Models](#data-models)
-- [License](#license)
 
 ## Features
 
@@ -42,7 +40,7 @@ Welcome to the Bike Rental Service API. This backend service allows users to ren
   - View Rental History
   - Return a Bike (Admin Only)
 
-## Technology Stack
+## Stack
 
 - Programming Language: Typescript
 - Web Framework: Express js

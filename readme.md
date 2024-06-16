@@ -60,3 +60,25 @@ Welcome to the Bike Rental Service API. This backend service allows users to ren
   npm run start:dev
 
 ## File structure
+```
+/src
+  |__ config
+  |__ errors
+  |__ middleware
+  |__ modules
+    |__ auth
+    |__ bike
+    |__ booking
+    |__ user
+  |__ route
+  |__ utils
+|__ app.ts
+|__ server.ts
+|__ ER.png
+|__ eslint.config.mjs
+|__ package-lock.json
+|__ package.json
+|__ README.md
+|__ tsconfig.json
+
+

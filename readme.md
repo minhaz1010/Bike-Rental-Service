@@ -2,8 +2,11 @@
 
 Welcome to the Bike Rental Service API. This backend service allows users to rent bikes, manage their profiles, and view available bikes. Admins can manage bike inventory and handle user rentals.
 
-## ER-Diagram Pic
-![ER-Diagram][/media/minhaz/New Volume/ALL_CODE/Level-02/Mission-03/Assignment-03/ER.png]
+## ER-Diagram 
+![ER-Diagram](./ER.png)
+
+## Requirement-Analysis
+[Requirement-analysis](https://drive.google.com/file/d/144c1fo0Bn1OuU1FNCfvaD3X_4GpN8rRl/view?usp=drive_link)
 
 ## Table of Contents
 
@@ -36,14 +39,24 @@ Welcome to the Bike Rental Service API. This backend service allows users to ren
   - View Rental History
   - Return a Bike (Admin Only)
 
-## Requirements
+## Technology Stack
 
-- Node.js
-- MongoDB
+- Programming Language: Typescript
+- Web Framework: Express js
+- Database And ODM: mongodb and mongoose
 
 ## Installation
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/yourusername/bike-rental-service.git
-   cd bike-rental-service
+   git clone https://github.com/minhaz1010/Bike-Rental-Service.git
+   cd Bike-Rental-Service
+2. npm install
+
+## Commands 
+
+- To run
+  ``` 
+  npm run start:dev
+
+## File structure

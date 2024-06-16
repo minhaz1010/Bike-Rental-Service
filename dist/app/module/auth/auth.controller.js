@@ -23,8 +23,8 @@ const login = (0, catchAsyncError_1.default)((req, res) => __awaiter(void 0, voi
         success: true,
         statusCode: 200,
         message: "User logged in successfully",
-        token: result.token,
-        data: result.userObj,
+        token: result === null || result === void 0 ? void 0 : result.token,
+        data: result === null || result === void 0 ? void 0 : result.userObj,
     });
 }));
 const signUp = (0, catchAsyncError_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {

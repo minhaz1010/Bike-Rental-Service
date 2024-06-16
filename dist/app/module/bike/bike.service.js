@@ -16,7 +16,7 @@ const createBikeInDatabase = (payload) => __awaiter(void 0, void 0, void 0, func
     return result;
 });
 const getAllBikesFromDatabase = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield bike_model_1.Bike.find();
+    const result = yield bike_model_1.Bike.find({ isAvailable: true });
     return result;
 });
 const updateBikeFromDatabase = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {

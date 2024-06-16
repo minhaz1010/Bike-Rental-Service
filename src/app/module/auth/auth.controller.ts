@@ -9,8 +9,8 @@ const login = catchAsyncErrors(async (req, res) => {
     success: true,
     statusCode: 200,
     message: "User logged in successfully",
-    token: result.token,
-    data: result.userObj,
+    token: result?.token,
+    data: result?.userObj,
   });
 });
 

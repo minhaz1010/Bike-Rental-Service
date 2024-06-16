@@ -63,7 +63,6 @@ const rentABikeService = async (
   } catch (error) {
     await session.abortTransaction();
     await session.endSession();
-    console.log({ error }, "booking controller");
     throw new AppError(
       httpStatus.BAD_REQUEST,
       "Something went wrong to rent a bike",
@@ -143,7 +142,6 @@ const returnBikeServices = async (bookingId: string) => {
   } catch (error) {
     await session.abortTransaction();
     await session.endSession();
-    console.log({ error });
     throw new AppError(httpStatus.FORBIDDEN, "Something went wrong to update ");
   }
 };

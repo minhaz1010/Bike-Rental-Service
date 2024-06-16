@@ -9,11 +9,11 @@ import sendResponse from "../../utils/sendResponse";
 const boookingABike = catchAsyncErrors(async (req, res) => {
   const headers = req.headers.authorization;
   if (!headers) {
-    throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized");
+    throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route");
   }
   const authToken = headers.split("Bearer ")[1];
   if (!authToken) {
-    throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized");
+    throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route");
   }
   const payload = jwt.verify(
     authToken,
@@ -35,11 +35,11 @@ const boookingABike = catchAsyncErrors(async (req, res) => {
 const myRentals = catchAsyncErrors(async (req, res) => {
   const headers = req.headers.authorization;
   if (!headers) {
-    throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized");
+    throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route");
   }
   const authToken = headers.split("Bearer ")[1];
   if (!authToken) {
-    throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized");
+    throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route");
   }
   const payload = jwt.verify(
     authToken,

@@ -13,11 +13,11 @@ export const authMiddleware = (...givenRole: TUserRole[]) => {
     async (req: Request, res: Response, next: NextFunction) => {
       const headers = req.headers.authorization;
       if (!headers) {
-        throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized");
+        throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route");
       }
       const authToken = headers.split("Bearer ")[1];
       if (!authToken) {
-        throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized");
+        throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route");
       }
       const payload = jwt.verify(
         authToken,
@@ -29,7 +29,7 @@ export const authMiddleware = (...givenRole: TUserRole[]) => {
 
       const { role, email } = payload;
       if (givenRole && !givenRole.includes(role)) {
-        throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized");
+        throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route");
       }
       const user = await User.findOne({ email });
       if (!user) {

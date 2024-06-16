@@ -32,6 +32,59 @@ const boookingABike = catchAsyncErrors(async (req, res) => {
   });
 });
 
+const myRentals = catchAsyncErrors(async (req, res) => {
+  const headers = req.headers.authorization;
+  if (!headers) {
+    throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized");
+  }
+  const authToken = headers.split("Bearer ")[1];
+  if (!authToken) {
+    throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized");
+  }
+  const payload = jwt.verify(
+    authToken,
+    config.JWT_SECRET as string,
+  ) as JwtPayload;
+  if (!payload) {
+    throw new AppError(httpStatus.FORBIDDEN, "Payload is corrupted");
+  }
+
+  const result = await BookingServices.myRentalsService(payload);
+  sendResponse(res, {
+    message: "Rental retreived successfully",
+    statusCode: 200,
+    result,
+  });
+});
+
+const returnBike = catchAsyncErrors(async (req, res) => {
+  // const headers = req.headers.authorization;
+  // if (!headers) {
+  //   throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized");
+  // }
+  // const authToken = headers.split("Bearer ")[1];
+  // if (!authToken) {
+  //   throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized");
+  // }
+  // const payload = jwt.verify(
+  //   authToken,
+  //   config.JWT_SECRET as string,
+  // ) as JwtPayload;
+  // if (!payload) {
+  //   throw new AppError(httpStatus.FORBIDDEN, "Payload is corrupted");
+  // }
+  const { id } = req.params;
+  const bookingId = id;
+  const result = await BookingServices.returnBikeServices(bookingId);
+  sendResponse(res, {
+    statusCode: 200,
+    message: "Bike returned successfully",
+    result,
+  });
+});
+
 export const BookingController = {
   boookingABike,
+  myRentals,
+  returnBike,
 };

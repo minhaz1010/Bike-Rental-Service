@@ -1,3 +1,4 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 import { Query, Schema, model } from "mongoose";
 import { IBike } from "./bike.interface";
 import AppError from "../../errors/appError";
@@ -40,7 +41,7 @@ const bikeSchema = new Schema<IBike>({
 
 bikeSchema.pre<Query<any, any>>(
   /^findOneAnd(Update|Delete)$/,
-  async function (next) {
+  async function(next) {
     const query = this as Query<any, any>;
     const _id = query.getQuery()._id;
 

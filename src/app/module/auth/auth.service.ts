@@ -25,8 +25,12 @@ const loginService = async (payload: IAuth) => {
     email: user.email,
     role: user.role,
   };
-  const userObj = user.toObject();
-  delete userObj.password;
+
+
+
+  const userObj: Partial<IUser> = user.toObject();
+  delete userObj['password'];
+
 
   const token = jwt.sign(jwtPayload, config.JWT_SECRET as string, {
     expiresIn: config.JWT_EXPIRES,
@@ -41,8 +45,9 @@ const signUpAUserService = async (payload: IUser) => {
   const user = new User(payload);
   await user.save();
 
-  const userObj = user.toObject();
-  delete userObj.password;
+  const userObj: Partial<IUser> = user;
+  delete userObj['password']
+
   return userObj;
 };
 

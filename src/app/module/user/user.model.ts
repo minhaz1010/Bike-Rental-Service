@@ -1,3 +1,4 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 import { Schema, UpdateQuery, model } from "mongoose";
 import { IUser } from "./user.interface";
 import bcrypt from "bcrypt";
@@ -39,12 +40,13 @@ const userSchema = new Schema<IUser>(
   },
 );
 
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function(next) {
   this.password = await bcrypt.hash(this.password, 12);
   next();
 });
 
-userSchema.pre("findOneAndUpdate", async function (next) {
+
+userSchema.pre("findOneAndUpdate", async function(next) {
   const value = this.getUpdate() as UpdateQuery<any>;
 
   if (value) {

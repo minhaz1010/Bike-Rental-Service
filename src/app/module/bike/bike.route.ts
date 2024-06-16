@@ -21,6 +21,6 @@ router.put(
   BikeController.updateBike,
 );
 
-router.delete("/bikes/:id", BikeController.deleteBike);
+router.delete("/bikes/:id", authMiddleware('admin'), BikeController.deleteBike);
 
 export const BikeRoutes = router;

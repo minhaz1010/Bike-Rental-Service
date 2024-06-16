@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ErrorRequestHandler } from "express";
 import { TErrorMessages } from "../utils";
 import { ZodError } from "zod";
@@ -88,7 +90,6 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     success: false,
     message,
     errorMessages,
-    err,
     stack: config.NODE_ENV === "development" ? err?.stack : null,
   });
 };

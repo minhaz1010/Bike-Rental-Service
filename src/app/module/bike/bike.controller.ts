@@ -7,7 +7,7 @@ import AppError from "../../errors/appError";
 const createBike = catchAsyncErrors(async (req, res) => {
   const result = await BikeServices.createBikeInDatabase(req.body);
   sendResponse(res, {
-    statusCode: httpStatus.CREATED,
+    statusCode: httpStatus.OK,
     message: "Bike added successfully",
     result,
   });

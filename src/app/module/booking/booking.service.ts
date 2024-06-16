@@ -84,11 +84,13 @@ const returnBikeServices = async (bookingId: string) => {
   if (!bookingInformation) {
     throw new AppError(httpStatus.FORBIDDEN, "Sorry there is no such booking");
   }
+  if (bookingInformation.isReturned === true) {
+    throw new AppError(httpStatus.FORBIDDEN, 'The bike is already returned')
+  }
   const bikeId = bookingInformation.bikeId;
 
   const bikeInformation = await Bike.findById(bikeId);
 
-  // INFO: start  time ke bangladesh time e rupantor
   const startTime = bookingInformation.startTime;
   const returnTIme = new Date().toISOString();
 
@@ -101,7 +103,7 @@ const returnBikeServices = async (bookingId: string) => {
     totalHours = Math.ceil(withoutCeilInHours);
   }
 
-  const totalCost = pricePerHourOfABike * totalHours;
+  const totalCost = Math.abs(pricePerHourOfABike * totalHours);
   const bookingUpdatedInformation: Partial<IBooking> = {};
 
 

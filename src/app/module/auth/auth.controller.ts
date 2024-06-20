@@ -3,6 +3,7 @@ import catchAsyncErrors from "../../utils/catchAsyncError";
 import sendResponse from "../../utils/sendResponse";
 import { AuthServices } from "./auth.service";
 
+// * login controllers
 const login = catchAsyncErrors(async (req, res) => {
   const result = await AuthServices.loginService(req.body);
   res.status(200).json({
@@ -14,6 +15,7 @@ const login = catchAsyncErrors(async (req, res) => {
   });
 });
 
+// * signup controllers
 const signUp = catchAsyncErrors(async (req, res) => {
   const result = await AuthServices.signUpAUserService(req.body);
   sendResponse(res, {

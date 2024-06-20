@@ -7,16 +7,19 @@ import { UserServices } from "./user.service";
 import config from "../../config";
 
 const seeUserProfile = catchAsyncErrors(async (req, res) => {
+  
   const headers = req.headers.authorization;
+  // * check if headers is present or not
   if (!headers) {
     throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route");
   }
   const authToken = headers.split("Bearer ")[1];
+  // * check if authToken is present or not
 
   if (!authToken) {
     throw new AppError(httpStatus.UNAUTHORIZED, 'You have no access to this route');
   }
-
+  // * verify the authtoken
   const payload = jwt.verify(
     authToken,
     config.JWT_SECRET as string,
@@ -37,14 +40,21 @@ const seeUserProfile = catchAsyncErrors(async (req, res) => {
 
 const updateUserProfile = catchAsyncErrors(async (req, res) => {
   const headers = req.headers.authorization;
+    // * check if headers is present or not
+
   if (!headers) {
     throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route");
   }
   const authToken = headers.split("Bearer ")[1];
+  // * check if auth token is present or not
+
   if (!authToken) {
     throw new AppError(httpStatus.UNAUTHORIZED, 'You have no access to this route')
   }
-  const payload = jwt.decode(authToken) as JwtPayload;
+  const payload = jwt.verify(
+    authToken,
+    config.JWT_SECRET as string,
+  ) as JwtPayload;
 
   if (!payload) {
     throw new AppError(httpStatus.FORBIDDEN, "Payload is corrupted");

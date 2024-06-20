@@ -11,14 +11,18 @@ import config from "../config";
 export const authMiddleware = (...givenRole: TUserRole[]) => {
   return catchAsyncErrors(
     async (req: Request, res: Response, next: NextFunction) => {
+
       const headers = req.headers.authorization;
+      // * check if headers present or not
       if (!headers) {
         throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route");
       }
       const authToken = headers.split("Bearer ")[1];
+      // * check authToken is present or not
       if (!authToken) {
         throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route");
       }
+      // * then verify the authToken 
       const payload = jwt.verify(
         authToken,
         config.JWT_SECRET as string,
@@ -26,8 +30,9 @@ export const authMiddleware = (...givenRole: TUserRole[]) => {
       if (!payload) {
         throw new AppError(httpStatus.FORBIDDEN, "Payload is corrupted");
       }
-
+      // * if everything is okay then extract the role and email from payload
       const { role, email } = payload;
+      // * check if the role is included or not
       if (givenRole && !givenRole.includes(role)) {
         throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route");
       }
@@ -35,7 +40,6 @@ export const authMiddleware = (...givenRole: TUserRole[]) => {
       if (!user) {
         throw new AppError(httpStatus.FORBIDDEN, "No User Found");
       }
-
       next();
     },
   );

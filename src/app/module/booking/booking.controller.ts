@@ -6,15 +6,23 @@ import config from "../../config";
 import { BookingServices } from "./booking.service";
 import sendResponse from "../../utils/sendResponse";
 
+// * rental  a bike controller
 const boookingABike = catchAsyncErrors(async (req, res) => {
+
+  
   const headers = req.headers.authorization;
+    // * check if headers is present or not
+
   if (!headers) {
     throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route");
   }
   const authToken = headers.split("Bearer ")[1];
+    // * check if auth token is present or not
+
   if (!authToken) {
     throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route");
   }
+  // * verify the token
   const payload = jwt.verify(
     authToken,
     config.JWT_SECRET as string,

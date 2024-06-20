@@ -3,17 +3,13 @@
 import { ErrorRequestHandler } from "express";
 import { TErrorMessages } from "../utils";
 import { ZodError } from "zod";
-import handleZodError from "./handleZodError";
-import handleDuplicateError from "./handleDuplicateError";
-import mongooseValiDationError from "./mongooseValidationError";
-import handleCastError from "./handleCastError";
-import AppError from "./appError";
 import config from "../config";
-import {
-  handleJsonWebTokenError,
-  handleTokenExpiredError,
-  notBeforeError,
-} from "./jwtError";
+import handleZodError from "../errors/handleZodError";
+import handleDuplicateError from "../errors/handleDuplicateError";
+import mongooseValiDationError from "../errors/mongooseValidationError";
+import handleCastError from "../errors/handleCastError";
+import { handleJsonWebTokenError, handleTokenExpiredError, notBeforeError } from "../errors/jwtError";
+import AppError from "../errors/appError";
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   let statusCode = 500;
@@ -33,37 +29,37 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
 
   // HACK:
 
-  if (err instanceof ZodError) {
+  if (err instanceof ZodError) { // ^ handle zod error
     const getTheErrorData = handleZodError(err);
     message = getTheErrorData.message;
     statusCode = getTheErrorData.statusCode;
     errorMessages = getTheErrorData.errorMessages;
-  } else if (err?.errorResponse?.code === 11000) {
+  } else if (err?.errorResponse?.code === 11000) { // ^ handle duplicate error
     const getTheErrorData = handleDuplicateError(err);
     message = getTheErrorData.message;
     statusCode = getTheErrorData.statusCode;
     errorMessages = getTheErrorData.errorMessages;
-  } else if (err?.name === "ValidationError") {
+  } else if (err?.name === "ValidationError") { // ^ handle mongoose validation error
     const getTheErrorData = mongooseValiDationError(err);
     message = getTheErrorData.message;
     statusCode = getTheErrorData.statusCode;
     errorMessages = getTheErrorData.errorMessages;
-  } else if (err?.name === "CastError") {
+  } else if (err?.name === "CastError") { // ^ handle cast error
     const getTheErrorData = handleCastError(err);
     message = getTheErrorData.message;
     statusCode = getTheErrorData.statusCode;
     errorMessages = getTheErrorData.errorMessages;
-  } else if (err?.name === "TokenExpiredError") {
+  } else if (err?.name === "TokenExpiredError") { // ^ handle jwt token expiration error
     const getTheErrorData = handleTokenExpiredError(err);
     statusCode = getTheErrorData.statusCode;
     message = getTheErrorData.message;
     errorMessages = getTheErrorData.errorMessages;
-  } else if (err?.name === "JsonWebTokenError") {
+  } else if (err?.name === "JsonWebTokenError") { // ^ handle jwt jsonwebtoken error
     const getTheErrorData = handleJsonWebTokenError(err);
     statusCode = getTheErrorData.statusCode;
     message = getTheErrorData.message;
     errorMessages = getTheErrorData.errorMessages;
-  } else if (err?.name === "NotBeforeError") {
+  } else if (err?.name === "NotBeforeError") { // ^ handle jwt notbeforeerror
     const getTheErrorData = notBeforeError(err);
     statusCode = getTheErrorData.statusCode;
     message = getTheErrorData.message;

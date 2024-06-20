@@ -4,6 +4,7 @@ import { BikeServices } from "./bike.service";
 import sendResponse from "../../utils/sendResponse";
 import AppError from "../../errors/appError";
 
+// * create a bike controller (admin)
 const createBike = catchAsyncErrors(async (req, res) => {
   const result = await BikeServices.createBikeInDatabase(req.body);
   sendResponse(res, {
@@ -13,6 +14,7 @@ const createBike = catchAsyncErrors(async (req, res) => {
   });
 });
 
+// * get all bike controller
 const getAllBike = catchAsyncErrors(async (req, res) => {
   const result = await BikeServices.getAllBikesFromDatabase();
   if (!result.length) {
@@ -24,7 +26,7 @@ const getAllBike = catchAsyncErrors(async (req, res) => {
     result,
   });
 });
-
+// * update a bike controller (admin)
 const updateBike = catchAsyncErrors(async (req, res) => {
   const result = await BikeServices.updateBikeFromDatabase(
     req.params.id,
@@ -38,6 +40,7 @@ const updateBike = catchAsyncErrors(async (req, res) => {
   });
 });
 
+// * delete a bike controller (admin)
 const deleteBike = catchAsyncErrors(async (req, res) => {
   const result = await BikeServices.deleteASingleBikeFromDatabase(
     req.params.id,

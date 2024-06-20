@@ -12,8 +12,6 @@ const getAllBikesFromDatabase = async () => {
 };
 
 const updateBikeFromDatabase = async (id: string, payload: Partial<IBike>) => {
-
-
   const result = await Bike.findOneAndUpdate({ _id: id }, payload, {
     new: true,
   });

@@ -62,24 +62,68 @@ Welcome to the Bike Rental Service API. This backend service allows users to ren
 
 ## File structure
 ```
-/src
-  |__ config
-  |__ errors
-  |__ middleware
-  |__ modules
-    |__ auth
-    |__ bike
-    |__ booking
-    |__ user
-  |__ route
-  |__ utils
-|__ app.ts
-|__ server.ts
-|__ ER.png
-|__ eslint.config.mjs
-|__ package-lock.json
-|__ package.json
-|__ README.md
-|__ tsconfig.json
+├── src
+│   ├── app
+│   │   ├── config
+│   │   │   └── index.ts
+│   │   ├── errors
+│   │   │   ├── appError.ts
+│   │   │   ├── handleCastError.ts
+│   │   │   ├── handleDuplicateError.ts
+│   │   │   ├── handleZodError.ts
+│   │   │   ├── jwtError.ts
+│   │   │   └── mongooseValidationError.ts
+│   │   ├── middleware
+│   │   │   ├── authMiddleware.ts
+│   │   │   ├── globalErrorHandler.ts
+│   │   │   ├── notFound.ts
+│   │   │   └── validateRequest.ts
+│   │   ├── module
+│   │   │   ├── auth
+│   │   │   │   ├── auth.controller.ts
+│   │   │   │   ├── auth.interface.ts
+│   │   │   │   ├── auth.route.ts
+│   │   │   │   ├── auth.service.ts
+│   │   │   │   └── auth.validation.ts
+│   │   │   ├── bike
+│   │   │   │   ├── bike.controller.ts
+│   │   │   │   ├── bike.interface.ts
+│   │   │   │   ├── bike.model.ts
+│   │   │   │   ├── bike.route.ts
+│   │   │   │   ├── bike.service.ts
+│   │   │   │   └── bike.validation.ts
+│   │   │   ├── booking
+│   │   │   │   ├── booking.controller.ts
+│   │   │   │   ├── booking.interface.ts
+│   │   │   │   ├── booking.model.ts
+│   │   │   │   ├── booking.route.ts
+│   │   │   │   ├── booking.service.ts
+│   │   │   │   └── booking.validation.ts
+│   │   │   └── user
+│   │   │       ├── user.controller.ts
+│   │   │       ├── user.interface.ts
+│   │   │       ├── user.model.ts
+│   │   │       ├── user.route.ts
+│   │   │       ├── user.service.ts
+│   │   │       └── user.validation.ts
+│   │   ├── route
+│   │   │   └── index.ts
+│   │   └── utils
+│   │       ├── catchAsyncError.ts
+│   │       ├── comparePassword.ts
+│   │       ├── index.d.ts
+│   │       ├── sendResponse.ts
+│   │       └── userRole.ts
+│   ├── app.ts
+│   └── server.ts
+├── ER.png
+├── eslint.config.mjs
+├── package.json
+├── package-lock.json
+├── readme.md
+├── tsconfig.json
+└── vercel.json
+
+ 
 
 

@@ -17,8 +17,6 @@ Welcome to the Bike Rental Service API. This backend service allows users to ren
 - [Technology Stack](#stack)
 - [Installation](#installation)
 - [Commands](#commands)
-- [API Endpoints](#api-endpoints)
-- [Data Models](#data-models)
 - [File Structure](#file-structure)
 
 ## Features

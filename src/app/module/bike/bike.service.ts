@@ -7,7 +7,12 @@ const createBikeInDatabase = async (payload: IBike) => {
 };
 
 const getAllBikesFromDatabase = async () => {
-  const result = await Bike.find({isAvailable:true});
+  const result = await Bike.find();
+  return result;
+};
+
+const getSingleBikeFromDatabase = async (id: string) => {
+  const result = await Bike.findById(id);
   return result;
 };
 
@@ -27,6 +32,7 @@ const deleteASingleBikeFromDatabase = async (id: string) => {
 export const BikeServices = {
   createBikeInDatabase,
   getAllBikesFromDatabase,
+  getSingleBikeFromDatabase,
   updateBikeFromDatabase,
   deleteASingleBikeFromDatabase,
 };

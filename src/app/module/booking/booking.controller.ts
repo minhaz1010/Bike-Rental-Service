@@ -8,19 +8,23 @@ import sendResponse from "../../utils/sendResponse";
 
 // * rental  a bike controller
 const boookingABike = catchAsyncErrors(async (req, res) => {
-
-  
   const headers = req.headers.authorization;
-    // * check if headers is present or not
+  // * check if headers is present or not
 
   if (!headers) {
-    throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route");
+    throw new AppError(
+      httpStatus.UNAUTHORIZED,
+      "You have no access to this route",
+    );
   }
   const authToken = headers.split("Bearer ")[1];
-    // * check if auth token is present or not
+  // * check if auth token is present or not
 
   if (!authToken) {
-    throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route");
+    throw new AppError(
+      httpStatus.UNAUTHORIZED,
+      "You have no access to this route",
+    );
   }
   // * verify the token
   const payload = jwt.verify(
@@ -43,11 +47,17 @@ const boookingABike = catchAsyncErrors(async (req, res) => {
 const myRentals = catchAsyncErrors(async (req, res) => {
   const headers = req.headers.authorization;
   if (!headers) {
-    throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route");
+    throw new AppError(
+      httpStatus.UNAUTHORIZED,
+      "You have no access to this route",
+    );
   }
   const authToken = headers.split("Bearer ")[1];
   if (!authToken) {
-    throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route");
+    throw new AppError(
+      httpStatus.UNAUTHORIZED,
+      "You have no access to this route",
+    );
   }
   const payload = jwt.verify(
     authToken,

@@ -8,19 +8,23 @@ const router = e.Router();
 
 router.post(
   "/bikes",
-  authMiddleware("admin"),
+  // authMiddleware("admin"),
   validateRequest(BikeValidations.createBikeValidationSchema),
   BikeController.createBike,
 );
 router.get("/bikes", BikeController.getAllBike);
 
+router.get("/bikes/:id", BikeController.getSingleBike);
+
 router.put(
   "/bikes/:id",
-  authMiddleware("admin"),
+  // authMiddleware("admin"),
   validateRequest(BikeValidations.updateBikeValidationSchema),
   BikeController.updateBike,
 );
 
-router.delete("/bikes/:id", authMiddleware('admin'), BikeController.deleteBike);
+router.delete("/bikes/:id",
+  //  authMiddleware("admin"),
+    BikeController.deleteBike);
 
 export const BikeRoutes = router;

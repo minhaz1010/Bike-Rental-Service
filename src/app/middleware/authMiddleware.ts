@@ -11,18 +11,23 @@ import config from "../config";
 export const authMiddleware = (...givenRole: TUserRole[]) => {
   return catchAsyncErrors(
     async (req: Request, res: Response, next: NextFunction) => {
-
       const headers = req.headers.authorization;
       // * check if headers present or not
       if (!headers) {
-        throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route");
+        throw new AppError(
+          httpStatus.UNAUTHORIZED,
+          "You have no access to this route",
+        );
       }
       const authToken = headers.split("Bearer ")[1];
       // * check authToken is present or not
       if (!authToken) {
-        throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route");
+        throw new AppError(
+          httpStatus.UNAUTHORIZED,
+          "You have no access to this route",
+        );
       }
-      // * then verify the authToken 
+      // * then verify the authToken
       const payload = jwt.verify(
         authToken,
         config.JWT_SECRET as string,
@@ -34,12 +39,18 @@ export const authMiddleware = (...givenRole: TUserRole[]) => {
       const { role, email } = payload;
       // * check if the role is included or not
       if (givenRole && !givenRole.includes(role)) {
-        throw new AppError(httpStatus.UNAUTHORIZED, "You have no access to this route");
+        throw new AppError(
+          httpStatus.UNAUTHORIZED,
+          "You have no access to this route",
+        );
       }
       const user = await User.findOne({ email });
       if (!user) {
         throw new AppError(httpStatus.FORBIDDEN, "No User Found");
       }
+
+      req.user = user;
+
       next();
     },
   );

@@ -6,6 +6,7 @@ import { Bike } from "../bike/bike.model";
 import mongoose from "mongoose";
 import { Booking } from "./booking.model";
 import { JwtPayload } from "jsonwebtoken";
+import { initiatePayment } from "../../utils/bookingUtils";
 
 const rentABikeService = async (
   payload: JwtPayload,
@@ -17,8 +18,8 @@ const rentABikeService = async (
   if (!user) {
     throw new AppError(httpStatus.FORBIDDEN, "No user found");
   }
-  
-  // * get the bikeId and startTime 
+
+  // * get the bikeId and startTime
   const { bikeId, startTime } = bookingData;
 
   // * finding the bike by bikeId
@@ -27,18 +28,20 @@ const rentABikeService = async (
   if (!bike) {
     throw new AppError(httpStatus.BAD_REQUEST, "No bike found");
   }
-  // * check if the bike is Available or not 
+  // * check if the bike is Available or not
   const isBikeAvailable = bike.isAvailable;
 
   if (!isBikeAvailable) {
     throw new AppError(httpStatus.BAD_REQUEST, "Bike is unavailable");
   }
- 
+
   // * add Bookinginfo and then saved it into the booking model
+  const transId = `TXN-${Date.now()}-${Math.floor(Math.random() * (999999 - 111111 + 1)) + 111111}`;
   const bookingInfo: Partial<IBooking> = {};
   bookingInfo.bikeId = bikeId;
   bookingInfo.userId = user._id;
   bookingInfo.startTime = startTime;
+  bookingInfo.transactionId = transId;
   // * start the mongoose session
   const session = await mongoose.startSession();
   try {
@@ -53,21 +56,40 @@ const rentABikeService = async (
     }
 
     // * update the bike isAvailability
-    const bikeInfo = await Bike.findByIdAndUpdate(
-      bikeId,
-      { isAvailable: false },
-      { new: true, session },
-    );
-    if (!bikeInfo) {
-      throw new AppError(
-        httpStatus.BAD_REQUEST,
-        "Something went wrong to update bike",
-      );
-    }
+    // const bikeInfo = await Bike.findByIdAndUpdate(
+    //   bikeId,
+    //   { isAvailable: false },
+    //   { new: true, session },
+    // );
+    // if (!bikeInfo) {
+    //   throw new AppError(
+    //     httpStatus.BAD_REQUEST,
+    //     "Something went wrong to update bike",
+    //   );
+    // }
 
+    // TODO: Payment section
+    type TSendinfo = {
+      customerName: string;
+      customerEmail: string;
+      customerAddress: string;
+      customerPhone: string;
+      totalPrice: number;
+      transactionId: string;
+    };
+    const sendInfo: TSendinfo = {
+      customerName: user.name,
+      customerEmail: user.email,
+      customerAddress: user.address,
+      customerPhone: user.phone,
+      totalPrice: bike.pricePerHour,
+      transactionId: transId,
+    };
+
+    const response = await initiatePayment(sendInfo);
     await session.commitTransaction();
     await session.endSession();
-    return rentABike;
+    return response?.payment_url;
   } catch (error) {
     await session.abortTransaction();
     await session.endSession();
@@ -78,32 +100,33 @@ const rentABikeService = async (
   }
 };
 
-// * see my rental bike
+// & see my rental bike
 const myRentalsService = async (payload: JwtPayload) => {
   const { email } = payload;
   const user = await User.findOne({ email });
   const userId = user?._id;
-  const result = await Booking.find({ userId });
+  const result = await Booking.find({
+    userId: userId,
+    bookingStatus: { $ne: "CANCEL" },
+  });
 
   return result;
 };
 
-
 // * return bike services (admin)
 const returnBikeServices = async (bookingId: string) => {
-
   // * get the bookingInformation
   const bookingInformation = await Booking.findById(bookingId);
   if (!bookingInformation) {
     throw new AppError(httpStatus.FORBIDDEN, "Sorry there is no such booking");
   }
-   // * if the bike is already returned then show it to the client
+  // * if the bike is already returned then show it to the client
   if (bookingInformation.isReturned === true) {
-    throw new AppError(httpStatus.FORBIDDEN, 'The bike is already returned')
+    throw new AppError(httpStatus.FORBIDDEN, "The bike is already returned");
   }
   // * getting the bikeId from bookingInformation
   const bikeId = bookingInformation.bikeId;
- // * getting the bike information 
+  // * getting the bike information
   const bikeInformation = await Bike.findById(bikeId);
 
   const startTime = bookingInformation.startTime; // * startTime from booking model
@@ -114,7 +137,7 @@ const returnBikeServices = async (bookingId: string) => {
   let totalHours = 0;
   // * calculating totalHours
   if (startTime && returnTIme) {
-    const withoutCeil = (new Date(returnTIme).getTime()) - startTime.getTime();
+    const withoutCeil = new Date(returnTIme).getTime() - startTime.getTime();
     const withoutCeilInHours = withoutCeil / (1000 * 60 * 60);
     totalHours = Math.ceil(withoutCeilInHours); // * if someone run the bike for 1.5 hour then make it to the 2 hours that what happens in the real world
   }

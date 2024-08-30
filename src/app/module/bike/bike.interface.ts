@@ -3,6 +3,7 @@ export interface IBike {
   description: string;
   pricePerHour: number;
   isAvailable?: boolean;
+  imageUrl: string;
   cc: number;
   year: number;
   model: string;

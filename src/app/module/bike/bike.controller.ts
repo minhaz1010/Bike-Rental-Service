@@ -26,6 +26,19 @@ const getAllBike = catchAsyncErrors(async (req, res) => {
     result,
   });
 });
+// * get single bike controller
+const getSingleBike = catchAsyncErrors(async (req, res) => {
+  const result = await BikeServices.getSingleBikeFromDatabase(req.params.id);
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, "No data found");
+  }
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    message: "Single Bike retrieved successfully",
+    result,
+  });
+});
+
 // * update a bike controller (admin)
 const updateBike = catchAsyncErrors(async (req, res) => {
   const result = await BikeServices.updateBikeFromDatabase(
@@ -55,6 +68,7 @@ const deleteBike = catchAsyncErrors(async (req, res) => {
 export const BikeController = {
   createBike,
   getAllBike,
+  getSingleBike,
   updateBike,
   deleteBike,
 };

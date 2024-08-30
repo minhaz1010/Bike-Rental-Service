@@ -3,6 +3,7 @@ import { BikeRoutes } from "../module/bike/bike.route";
 import { UserRoutes } from "../module/user/user.route";
 import { AuthRoutes } from "../module/auth/auth.route";
 import { BookingRoutes } from "../module/booking/booking.route";
+import { PaymentRoutes } from "../module/payment/payment.route";
 
 const router = e.Router();
 
@@ -22,6 +23,10 @@ const moduleRouter = [
   {
     path: "/rentals",
     route: BookingRoutes,
+  },
+  {
+    path: "/payment",
+    route: PaymentRoutes,
   },
 ];
 

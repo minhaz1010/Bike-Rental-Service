@@ -12,6 +12,14 @@ const bookingSchema = new Schema<IBooking>({
     required: true,
     ref: "Bike",
   },
+  bookingStatus: {
+    type: String,
+    enum: ["INITIAL_PAID", "FULL_PAID", "CANCEL"],
+    default: "CANCEL",
+  },
+  transactionId: {
+    type: String,
+  },
   startTime: {
     type: Date,
     required: true,

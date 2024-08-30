@@ -2,9 +2,10 @@ import httpStatus from "http-status";
 import AppError from "../../errors/appError";
 import { User } from "../user/user.model";
 import { IAuth } from "./auth.interface";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import config from "../../config";
 import { IUser } from "../user/user.interface";
+import bcrypt from "bcrypt";
 import checkPasswordIsCorrectOrNot from "../../utils/comparePassword";
 
 const loginService = async (payload: IAuth) => {
@@ -28,12 +29,10 @@ const loginService = async (payload: IAuth) => {
     role: user.role,
   };
 
-
-
   const userObj: Partial<IUser> = user.toObject();
-  delete userObj['password'];
+  delete userObj["password"];
 
-   // * create a token
+  // * create a token
   const token = jwt.sign(jwtPayload, config.JWT_SECRET as string, {
     expiresIn: config.JWT_EXPIRES,
   });
@@ -48,18 +47,42 @@ const signUpAUserService = async (payload: IUser) => {
   const user = new User(payload);
   await user.save();
 
-   // * copy the user in userObj and then delete the password
+  // * copy the user in userObj and then delete the password
   const userObj: Partial<IUser> = user.toObject();
   // delete userObj['password']
-  delete userObj.password
-
-  
+  delete userObj.password;
 
   // * return the user without password
   return userObj;
 };
 
+const changePasswordService = async (
+  oldPassword: string,
+  newPassword: string,
+  payload: JwtPayload,
+) => {
+  const email = payload.email;
+  const user = await User.findOne({ email }).select("+password");
+  const checkOldPasswordIsCorrectOrNot = await bcrypt.compare(
+    oldPassword,
+    user?.password as string,
+  );
+
+  if (!checkOldPasswordIsCorrectOrNot) {
+    throw new AppError(httpStatus.BAD_REQUEST, "Your Old Password Is Wrong");
+  }
+  const hashPassword = await bcrypt.hash(newPassword, 12);
+  const newUser = await User.findOneAndUpdate(
+    { email },
+    { password: hashPassword },
+    { new: true },
+  );
+
+  return newUser;
+};
+
 export const AuthServices = {
   loginService,
   signUpAUserService,
+  changePasswordService,
 };

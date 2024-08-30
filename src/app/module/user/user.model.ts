@@ -1,9 +1,7 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
-import { Schema, UpdateQuery, model } from "mongoose";
+import { Schema, model } from "mongoose";
 import { IUser } from "./user.interface";
 import bcrypt from "bcrypt";
-import AppError from "../../errors/appError";
-import httpStatus from "http-status";
 
 const userSchema = new Schema<IUser>(
   {
@@ -40,25 +38,24 @@ const userSchema = new Schema<IUser>(
   },
 );
 
-userSchema.pre("save", async function(next) {
+userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, 12);
   next();
 });
 
+// userSchema.pre("findOneAndUpdate", async function (next) {
+//   const value = this.getUpdate() as UpdateQuery<any>;
 
-userSchema.pre("findOneAndUpdate", async function(next) {
-  const value = this.getUpdate() as UpdateQuery<any>;
+//   if (value) {
+//     if (value.password) {
+//       throw new AppError(
+//         httpStatus.FORBIDDEN,
+//         "You can not update the password",
+//       );
+//     }
+//   }
 
-  if (value) {
-    if (value.password) {
-      throw new AppError(
-        httpStatus.FORBIDDEN,
-        "You can not update the password",
-      );
-    }
-  }
-
-  next();
-});
+//   next();
+// });
 
 export const User = model<IUser>("User", userSchema);

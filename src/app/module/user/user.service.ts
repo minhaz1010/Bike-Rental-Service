@@ -28,7 +28,25 @@ const updateProfileServices = async (
   return result;
 };
 
+const getAllUsersFromServices = async () => {
+  const result = await User.find().select("-password");
+  return result;
+};
+
+const updateUserRoleInService = async (id: string, role: "user"|"admin") => {
+  const result = await User.findByIdAndUpdate(id,{role},{new:true})
+  return result;
+};
+
+const deleteAProfileFromService = async(id:string) =>{
+  const result = await User.findByIdAndDelete(id);
+  return result;
+}
+
 export const UserServices = {
   seeProfileServices,
   updateProfileServices,
+  getAllUsersFromServices,
+  updateUserRoleInService,
+  deleteAProfileFromService
 };

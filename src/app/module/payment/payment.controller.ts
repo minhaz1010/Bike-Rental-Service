@@ -21,7 +21,6 @@ const confirmPayment = catchAsyncErrors(async (req, res) => {
       res.send(template);
     }
   } catch (error) {
-    console.log(error);
     res.send(template);
   }
 });
@@ -41,7 +40,6 @@ const finalPayment = catchAsyncErrors(async (req, res) => {
       res.send(template);
     }
   } catch (error) {
-    console.log(error);
     res.send(template);
   }
 });

@@ -5,7 +5,7 @@ const createBikeValidationSchema = z.object({
     name: z.string(),
     description: z.string(),
     pricePerHour: z.number(),
-    imageUrl:z.string(),
+    imageUrl: z.string(),
     isAvailable: z.boolean().default(true).optional(),
     cc: z.number(),
     year: z.number(),

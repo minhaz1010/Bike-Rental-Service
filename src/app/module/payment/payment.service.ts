@@ -8,7 +8,7 @@ import { readFileSync } from "fs";
 import { IBooking } from "../booking/booking.interface";
 
 const confirmPaymentService = async (trxId: string, amount: number) => {
-  const filePath = path.join(__dirname, "../../views/confirmation.html");
+  const filePath = path.join(__dirname, "../../../../public/confirmation.html");
   let template = readFileSync(filePath, "utf-8");
   if (amount === 100) {
     const session = await mongoose.startSession();

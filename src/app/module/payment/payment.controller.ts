@@ -7,7 +7,7 @@ import { readFileSync } from "fs";
 const confirmPayment = catchAsyncErrors(async (req, res) => {
   const { transactionId } = req.query;
   const response = await verifyPayment(transactionId as string);
-  const filePath = path.join(__dirname, "../../views/fail.html");
+  const filePath = path.join(__dirname, "../../../../public/fail.html");
   const template = readFileSync(filePath, "utf-8");
   try {
     if (response.pay_status === "Successful") {

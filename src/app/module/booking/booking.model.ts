@@ -20,6 +20,9 @@ const bookingSchema = new Schema<IBooking>({
   transactionId: {
     type: String,
   },
+  finalTransactionId: {
+    type: String,
+  },
   startTime: {
     type: Date,
     required: true,

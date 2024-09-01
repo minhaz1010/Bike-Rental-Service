@@ -8,11 +8,7 @@ const router = e.Router();
 
 router.get("/me", UserController.seeUserProfile);
 
-router.get(
-  "/all-users",
-  authMiddleware("admin"),
-  UserController.getAllUsers,
-);
+router.get("/all-users", authMiddleware("admin"), UserController.getAllUsers);
 
 router.patch(
   "/update-user-role",

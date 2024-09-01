@@ -6,11 +6,7 @@ import httpStatus from "http-status";
 import path from "path";
 import { readFileSync } from "fs";
 
-const confirmPaymentService = async (
-  trxId: string,
-  status: string,
-  amount: number,
-) => {
+const confirmPaymentService = async (trxId: string, amount: number) => {
   const filePath = path.join(__dirname, "../../views/confirmation.html");
   let template = readFileSync(filePath, "utf-8");
   if (amount === 100) {
@@ -79,6 +75,39 @@ const confirmPaymentService = async (
   }
 };
 
+const finalConfirmPaymentService = async (trxId: string) => {
+  const filePath = path.join(__dirname, "../../views/confirmation.html");
+  let template = readFileSync(filePath, "utf-8");
+  console.log(trxId, "transaction id");
+  // ! update the paymentStatus to full_paid
+  const updatedBookingData = await Booking.findOneAndUpdate(
+    {
+      finalTransactionId: trxId,
+    },
+    {
+      bookingStatus: "FULL_PAID",
+    },
+    {
+      new: true,
+    },
+  );
+  console.log(updatedBookingData, "from final pyment service");
+  // if (!updatedBookingData) {
+  //   throw new AppError(
+  //     httpStatus.BAD_REQUEST,
+  //     "Something Went Wrong to update the booking status",
+  //   );
+  // }
+
+  template = template.replace(
+    "{transactionId}",
+    updatedBookingData.transactionId,
+  );
+
+  return template;
+};
+
 export const PaymentServices = {
   confirmPaymentService,
+  finalConfirmPaymentService,
 };

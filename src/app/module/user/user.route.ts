@@ -10,19 +10,19 @@ router.get("/me", UserController.seeUserProfile);
 
 router.get(
   "/all-users",
-  // authMiddleware("admin"),
+  authMiddleware("admin"),
   UserController.getAllUsers,
 );
 
 router.patch(
   "/update-user-role",
-  // authMiddleware("admin"),
+  authMiddleware("admin"),
   UserController.updateUserRole,
 );
 
 router.delete(
   "/delete-a-user",
-  // authMiddleware("admin"),
+  authMiddleware("admin"),
   UserController.deleteAUser,
 );
 

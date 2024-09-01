@@ -13,10 +13,23 @@ router.post(
 );
 router.get("/", BookingController.myRentals);
 
-router.put(
-  "/:id/return",
+router.get(
+  "/all-rentals",
   authMiddleware("admin"),
-  BookingController.returnBike,
+  BookingController.seeAllRentalBike,
 );
+
+router.patch(
+  "/calculate-total-cost/:id",
+  authMiddleware("admin"),
+  BookingController.calculateTotalCost,
+);
+
+router.post("/full-payment/:id", BookingController.fullPayment);
+// router.put(
+//   "/:id/return",
+//   // authMiddleware("admin"),
+//   BookingController.returnBike,
+// );
 
 export const BookingRoutes = router;

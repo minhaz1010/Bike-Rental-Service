@@ -90,35 +90,33 @@ const getAllUsers = catchAsyncErrors(async (req, res) => {
 
 export const updateUserRole = catchAsyncErrors(async (req, res) => {
   const { id, role } = req.body;
-  if(role==="user" || role==="admin"){
+  if (role === "user" || role === "admin") {
     const result = await UserServices.updateUserRoleInService(id, role);
     sendResponse(res, {
       result,
       statusCode: httpStatus.OK,
       message: "Updated successfully",
     });
-  }
-  else {
-    throw new AppError(httpStatus.BAD_REQUEST,'Sorry Role Is unvalid')
+  } else {
+    throw new AppError(httpStatus.BAD_REQUEST, "Sorry Role Is unvalid");
   }
 });
 
-export const deleteAUser = catchAsyncErrors(async(req,res) =>{
-  const {id} = req.body;
-   await UserServices.deleteAProfileFromService(id);
-  sendResponse(res,{
-    statusCode:httpStatus.OK,
-    result:null,
-    message:"Deleted successfully",
-    success:true
-  })
-
-})
+export const deleteAUser = catchAsyncErrors(async (req, res) => {
+  const { id } = req.body;
+  await UserServices.deleteAProfileFromService(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    result: null,
+    message: "Deleted successfully",
+    success: true,
+  });
+});
 
 export const UserController = {
   seeUserProfile,
   updateUserProfile,
   updateUserRole,
   getAllUsers,
-  deleteAUser
+  deleteAUser,
 };

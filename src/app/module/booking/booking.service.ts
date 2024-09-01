@@ -9,7 +9,6 @@ import { JwtPayload } from "jsonwebtoken";
 import { finalPayment, initiatePayment } from "../../utils/bookingUtils";
 import { TSendinfo } from "../../utils";
 import { IUser } from "../user/user.interface";
-import { IBike } from "../bike/bike.interface";
 
 // & rent a bike service
 const rentABikeService = async (
@@ -87,7 +86,7 @@ const fullPaymentService = async (bookingId: string) => {
     transactionId: finalTransactionId,
   };
 
-  const res = await Booking.findByIdAndUpdate(
+   await Booking.findByIdAndUpdate(
     bookingId,
     {
       finalTransactionId: finalTransactionId,

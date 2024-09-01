@@ -86,7 +86,7 @@ const fullPaymentService = async (bookingId: string) => {
     transactionId: finalTransactionId,
   };
 
-  await Booking.findByIdAndUpdate(
+   await Booking.findByIdAndUpdate(
     bookingId,
     {
       finalTransactionId: finalTransactionId,
@@ -95,6 +95,7 @@ const fullPaymentService = async (bookingId: string) => {
       new: true,
     },
   );
+
 
   const response = await finalPayment(sendInfo);
 

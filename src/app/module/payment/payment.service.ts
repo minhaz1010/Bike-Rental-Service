@@ -77,7 +77,7 @@ const confirmPaymentService = async (trxId: string, amount: number) => {
 };
 
 const finalConfirmPaymentService = async (trxId: string) => {
-  const filePath = path.join(__dirname, "../../views/confirmation.html");
+  const filePath = path.join(__dirname, "../../../../public/confirmation.html");
   let template = readFileSync(filePath, "utf-8");
   // ! update the paymentStatus to full_paid
   const updatedBookingData = await Booking.findOneAndUpdate(

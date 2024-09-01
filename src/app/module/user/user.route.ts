@@ -20,10 +20,11 @@ router.patch(
   UserController.updateUserRole,
 );
 
-router.delete("/delete-a-user",
+router.delete(
+  "/delete-a-user",
   // authMiddleware("admin"),
-  UserController.deleteAUser
-)
+  UserController.deleteAUser,
+);
 
 router.put(
   "/me",

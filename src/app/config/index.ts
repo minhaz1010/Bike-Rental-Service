@@ -12,4 +12,6 @@ export default {
   SIGNATURE_KEY: process.env.SIGNATURE_KEY,
   AMARPAY_API: process.env.AMARPAY_API,
   PAYMENT_VERIFY_URL: process.env.PAYMENT_VERIFY_URL,
+  BACKEND_URL:process.env.BACKEND_URL,
+  CANCEL_URL:process.env.CANCEL_URL
 };

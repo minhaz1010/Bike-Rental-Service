@@ -5,6 +5,7 @@ import AppError from "../../errors/appError";
 import httpStatus from "http-status";
 import path from "path";
 import { readFileSync } from "fs";
+import { IBooking } from "../booking/booking.interface";
 
 const confirmPaymentService = async (trxId: string, amount: number) => {
   const filePath = path.join(__dirname, "../../views/confirmation.html");
@@ -78,7 +79,6 @@ const confirmPaymentService = async (trxId: string, amount: number) => {
 const finalConfirmPaymentService = async (trxId: string) => {
   const filePath = path.join(__dirname, "../../views/confirmation.html");
   let template = readFileSync(filePath, "utf-8");
-  console.log(trxId, "transaction id");
   // ! update the paymentStatus to full_paid
   const updatedBookingData = await Booking.findOneAndUpdate(
     {
@@ -90,8 +90,7 @@ const finalConfirmPaymentService = async (trxId: string) => {
     {
       new: true,
     },
-  );
-  console.log(updatedBookingData, "from final pyment service");
+  ) as IBooking;
   // if (!updatedBookingData) {
   //   throw new AppError(
   //     httpStatus.BAD_REQUEST,

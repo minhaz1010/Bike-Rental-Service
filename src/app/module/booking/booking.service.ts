@@ -205,7 +205,6 @@ const calculateTotalAmount = async (bookingId: string, returnTime: string) => {
       "Sorry there is no such booking",
     );
   }
-
   if (bookingInfo.isReturned === true) {
     throw new AppError(httpStatus.BAD_REQUEST, "The Bike Is Already Returned");
   }
@@ -215,7 +214,6 @@ const calculateTotalAmount = async (bookingId: string, returnTime: string) => {
   const startTime = bookingInfo.startTime;
 
   const dateStartTime = new Date(startTime);
-
   const dateReturnTime = new Date(returnTime);
   const timeDiffInMS = dateReturnTime.getTime() - dateStartTime.getTime();
   const totalHours = timeDiffInMS / (1000 * 60 * 60);
@@ -224,7 +222,6 @@ const calculateTotalAmount = async (bookingId: string, returnTime: string) => {
   const pricePerHour = bikeInfo?.pricePerHour as number;
 
   const totalPayment = Math.ceil((totalHours * pricePerHour) as number);
-
   const session = await mongoose.startSession();
   try {
     session.startTransaction();

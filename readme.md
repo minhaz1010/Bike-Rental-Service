@@ -38,7 +38,10 @@ Welcome to the Bike Rental Service API. This backend service allows users to ren
 - **Rental Management:**
   - Rent a Bike
   - View Rental History
-  - Return a Bike (Admin Only)
+  - Return a Bike (Admin Only)  
+
+- **Payment Integration:**  
+  - AAmarPay integrated  
 
 ## Stack
 

@@ -1,12 +1,14 @@
 # Bike Rental Service API
 
-Welcome to the Bike Rental Service API. This backend service allows users to rent bikes, manage their profiles, and view available bikes. Admins can manage bike inventory and handle user rentals.
+Welcome to the Bike Rental Service API. This backend service allows users to rent bikes with advance 100 BDT payment, manage their profiles and password , and view available bikes. Admins can manage bike inventory and handle user rentals.
 
 ## Front-End
 [Front-End](https://github.com/minhaz1010/Bike-Rental-Front-End)
+[Live-Link](https://bike-rental-client-theta.vercel.app/)
+
 
 ## Live Link
-[Bike-Rental-Service](https://bike-rental-service-node.vercel.app/)
+[Bike-Rental-Service-Backend](https://bike-rental-service-node.vercel.app/)
 
 ## ER-Diagram 
 ![ER-Diagram](./ER.png)
@@ -29,19 +31,25 @@ Welcome to the Bike Rental Service API. This backend service allows users to ren
   - User Login
   - Admin Signup
   - Admin Login
+  
 
 - **Profile Management:**
   - View Profile
   - Update Profile
+  - User Can Reset His Password
+  - Admin Can Reset His Password
 
 - **Bike Management:**
   - View Available Bikes
   - Create, Update, Delete Bikes (Admin Only)
 
 - **Rental Management:**
-  - Rent a Bike
-  - View Rental History
-  - Return a Bike (Admin Only)  
+  - User Can Rent A Bike By Pay 100 BDT In Advance
+  - User Can View His Rental History
+  - Admin Can View All Rental History
+  - Admin Can Calculate Total Bill Of A Certain User
+  - User Can Return A Bike By Paying The Money
+  - Admin Can Verify A User Payment 
 
 - **Payment Integration:**  
   - AAmarPay integrated  
@@ -51,6 +59,8 @@ Welcome to the Bike Rental Service API. This backend service allows users to ren
 - Programming Language: Typescript
 - Web Framework: Express js
 - Database And ODM: mongodb and mongoose
+- Authentication : JWT
+- Validation : Zod
 
 ## Installation
 
@@ -67,11 +77,15 @@ Welcome to the Bike Rental Service API. This backend service allows users to ren
   npm run start:dev
 
 ## File structure
+
 ```
+
 ├── src
 │   ├── app
 │   │   ├── config
 │   │   │   └── index.ts
+│   │   ├── db
+│   │   │   └── seedAdmin.ts
 │   │   ├── errors
 │   │   │   ├── appError.ts
 │   │   │   ├── handleCastError.ts
@@ -79,6 +93,8 @@ Welcome to the Bike Rental Service API. This backend service allows users to ren
 │   │   │   ├── handleZodError.ts
 │   │   │   ├── jwtError.ts
 │   │   │   └── mongooseValidationError.ts
+│   │   ├── interface
+│   │   │   └── index.d.ts
 │   │   ├── middleware
 │   │   │   ├── authMiddleware.ts
 │   │   │   ├── globalErrorHandler.ts
@@ -105,6 +121,10 @@ Welcome to the Bike Rental Service API. This backend service allows users to ren
 │   │   │   │   ├── booking.route.ts
 │   │   │   │   ├── booking.service.ts
 │   │   │   │   └── booking.validation.ts
+│   │   │   ├── payment
+│   │   │   │   ├── payment.controller.ts
+│   │   │   │   ├── payment.route.ts
+│   │   │   │   └── payment.service.ts
 │   │   │   └── user
 │   │   │       ├── user.controller.ts
 │   │   │       ├── user.interface.ts
@@ -115,6 +135,7 @@ Welcome to the Bike Rental Service API. This backend service allows users to ren
 │   │   ├── route
 │   │   │   └── index.ts
 │   │   └── utils
+│   │       ├── bookingUtils.ts
 │   │       ├── catchAsyncError.ts
 │   │       ├── comparePassword.ts
 │   │       ├── index.d.ts
@@ -122,6 +143,8 @@ Welcome to the Bike Rental Service API. This backend service allows users to ren
 │   │       └── userRole.ts
 │   ├── app.ts
 │   └── server.ts
+├── tsconfig.json
+└── vercel.json
 ├── ER.png
 ├── eslint.config.mjs
 ├── package.json
